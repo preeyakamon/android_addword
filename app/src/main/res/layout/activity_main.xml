@@ -10,12 +10,12 @@
         android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="38dp"
         android:background="@color/background_material_light"
         android:orientation="vertical"
         android:padding="20dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true">
+        android:layout_above="@+id/btnlogin"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="24dp">
 
         <ImageView
             android:id="@+id/imageView2"
@@ -24,7 +24,7 @@
             app:srcCompat="@drawable/log" />
 
         <EditText
-            android:id="@+id/editTextusername"
+            android:id="@+id/etusername"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -34,10 +34,10 @@
             android:hint="Username :" />
 
         <EditText
-            android:id="@+id/editTextpassword"
+            android:id="@+id/etpassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/editTextusername"
+            android:layout_below="@id/etusername"
             android:layout_centerHorizontal="true"
             android:layout_weight="1"
             android:ems="13"
@@ -46,22 +46,22 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/btnlogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="49dp"
         android:text="Login"
-        android:layout_alignBaseline="@+id/button5"
-        android:layout_alignBottom="@+id/button5"
+        android:layout_alignBaseline="@+id/btnregister"
+        android:layout_alignBottom="@+id/btnregister"
         android:layout_alignStart="@+id/linearLayout" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/btnregister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginStart="43dp"
-        android:layout_toEndOf="@+id/button4"
+        android:layout_toEndOf="@+id/btnlogin"
         android:text="Register" />
 
 
