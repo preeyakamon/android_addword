@@ -51,16 +51,17 @@ public class MainActivity extends AppCompatActivity {
                 String username = etusername.getText().toString();
                 String password = etpassword.getText().toString();
                 String url = getString(R.string.ip_address) + "/addword/action/login.php";
+
                 OkHttpClient client = new OkHttpClient();
                 RequestBody body = new FormBody.Builder()
                         .add("username", username)
                         .add("password", password)
                         .build();
-                Request request = new Request.Builder()
+                Request request = new Request.Builder()//การเตรียมข้อมูลเพื่อเรียกใช้
                         .url(url)
                         .post(body)
                         .build();
-                client.newCall(request).enqueue(new Callback() {
+                client.newCall(request).enqueue(new Callback() {// ตัวเรียก เซอร์วิส
                     @Override
                     public void onFailure(Call call, IOException e) {
                         e.printStackTrace();
@@ -75,8 +76,13 @@ public class MainActivity extends AppCompatActivity {
                                 Intent intent = new Intent(MainActivity.this, MenuActivity.class);
                                 startActivity(intent);
                             } else {
-                                Toast.makeText(MainActivity.this, "ข้อมูลผิดพลาด กรุณากรอกอีกครั้ง", Toast.LENGTH_SHORT).show();
-                            }
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(MainActivity.this, "ข้อมูลผิดพลาด กรุณากรอกอีกครั้ง", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                                }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
