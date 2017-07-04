@@ -19,7 +19,11 @@
         </activity>
         <activity android:name=".registerActivity" />
         <activity android:name=".MenuActivity" />
-        <activity android:name=".testactivity" android:windowSoftInputMode="stateVisible"></activity>
+        <activity
+            android:name=".testactivity"
+            android:windowSoftInputMode="stateVisible" />
+        <activity android:name=".Playactivity"
+            android:windowSoftInputMode="stateVisible" ></activity>
     </application>
 
 </manifest>
