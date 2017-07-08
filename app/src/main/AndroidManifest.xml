@@ -22,8 +22,10 @@
         <activity
             android:name=".testactivity"
             android:windowSoftInputMode="stateVisible" />
-        <activity android:name=".Playactivity"
-            android:windowSoftInputMode="stateVisible" ></activity>
+        <activity
+            android:name=".Playactivity"
+            android:windowSoftInputMode="stateVisible" />
+        <activity android:name=".Statisticactivity"></activity>
     </application>
 
 </manifest>
