@@ -62,8 +62,10 @@ public class Playactivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             level = bundle.containsKey("level") ? bundle.getInt("level") : 1;
-
+            new PreferenceUtil(this).setCurrentLevel(level);
         }
+
+        correctAnswer = new PreferenceUtil(this).getPointByLevel(level);
 
         final String url = getString(R.string.ip_address) + "/addword/action/level.php";
         OkHttpClient client = new OkHttpClient();
@@ -291,6 +293,7 @@ public class Playactivity extends AppCompatActivity {
             currentVocab = "";
             currentVocabPosition += 1;
             correctAnswer += 1;
+            new PreferenceUtil(this).plusPointByLevel(level);
             tvscoce_p.setText(correctAnswer + " / " + maxAnswer);
             checkLevel(false);
             new Handler().postDelayed(new Runnable() {
@@ -330,7 +333,7 @@ public class Playactivity extends AppCompatActivity {
                     startActivity(in);
                     finish();
                 } else {
-                    Intent in = new Intent(this, Statisticactivity.class);
+                    Intent in = new Intent(this, DisplaySummary.class);
                     startActivity(in);
                     handler.removeCallbacks(runTime);
                     finish();

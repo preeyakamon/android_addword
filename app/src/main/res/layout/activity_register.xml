@@ -50,9 +50,9 @@
         android:id="@+id/btnregister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="31dp"
+        android:layout_marginTop="60dp"
         android:text="Register"
-        android:layout_below="@+id/etconfirm"
+        android:layout_below="@+id/etpassword"
         android:layout_centerHorizontal="true" />
 
 

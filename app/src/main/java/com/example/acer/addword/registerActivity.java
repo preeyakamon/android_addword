@@ -23,7 +23,7 @@ import okhttp3.Response;
 
 public class registerActivity extends AppCompatActivity {
 
-    EditText etname, etusername, etpassword;
+    EditText etname, etusername, etpassword,etconfirm;
     Button btnregister;
 
     @Override
@@ -33,6 +33,7 @@ public class registerActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         etname = (EditText)findViewById(R.id.etname);
+        etconfirm = (EditText)findViewById(R.id.etconfirm);
         etusername = (EditText)findViewById(R.id.etusername);
         etpassword = (EditText)findViewById(R.id.etpassword);
         btnregister = (Button)findViewById(R.id.btnregister);

@@ -57,6 +57,14 @@ public class testactivity extends AppCompatActivity {
         mapPosition = new HashMap<>();
         orderPosition = new JSONArray();
 
+        if (new PreferenceUtil(this).getCurrentLevel() > 0) {
+            Intent in = new Intent(testactivity.this, Playactivity.class);
+            in.putExtra("level", new PreferenceUtil(this).getCurrentLevel());
+            startActivity(in);
+            finish();
+            return;
+        }
+
         final String url = getString(R.string.ip_address) + "/addword/action/test-level.php";
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
@@ -298,6 +306,7 @@ public class testactivity extends AppCompatActivity {
                     int level = Integer.parseInt(item.getString("level_id"));
                     int step = Integer.parseInt(item.getString("number"));
                     if (correctAnswer >= step) {
+                        new PreferenceUtil(this).addBonusPoint(level);
                         Intent in = new Intent(testactivity.this, Playactivity.class);
                         in.putExtra("level", level);
                         startActivity(in);
@@ -306,6 +315,7 @@ public class testactivity extends AppCompatActivity {
                         break;
                     }
                     if (i == (alllevel.length() - 1)) {
+                        new PreferenceUtil(this).addBonusPoint(1);
                         Intent in = new Intent(testactivity.this, Playactivity.class);
                         in.putExtra("level", 1);
                         startActivity(in);

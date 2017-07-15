@@ -37,6 +37,11 @@ public class MainActivity extends AppCompatActivity {
         btnlogin = (Button) findViewById(R.id.btnlogin);
         btnregister = (Button) findViewById(R.id.btnregister);
 
+        if (new PreferenceUtil(this).getUserLogin() != null) {
+            startActivity(new Intent(this, MenuActivity.class));
+            finish();
+        }
+
         btnregister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,6 +78,11 @@ public class MainActivity extends AppCompatActivity {
                         try {
                             JSONObject json = new JSONObject(formServer);
                             if (json.getBoolean("result")) { // if result = true
+
+                                // session.
+                                new PreferenceUtil(MainActivity.this).saveUserIDLogin(json.getInt("id"));
+                                new PreferenceUtil(MainActivity.this).saveUserLogin(json.getString("username"));
+
                                 Intent intent = new Intent(MainActivity.this, MenuActivity.class);
                                 startActivity(intent);
                             } else {
@@ -82,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                                         Toast.makeText(MainActivity.this, "ข้อมูลผิดพลาด กรุณากรอกอีกครั้ง", Toast.LENGTH_SHORT).show();
                                     }
                                 });
-                                }
+                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
