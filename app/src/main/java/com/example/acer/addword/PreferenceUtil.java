@@ -35,6 +35,10 @@ public class PreferenceUtil {
         return spf.getString(PREF_USERNAME, null);
     }
 
+    public static int getUserIDLogin() {
+        return spf.getInt(PREF_USER_ID, 0);
+    }
+
     public static void setCurrentLevel(String user) {
         String key = String.format("%s-level", user);
         SharedPreferences.Editor editor = spf.edit();
@@ -81,9 +85,24 @@ public class PreferenceUtil {
     }
 
     public static void clearSession() {
+        int userID = getUserIDLogin();
+        String userName = getUserLogin();
         SharedPreferences.Editor editor = spf.edit();
         editor.clear();
         editor.commit();
+        saveUserLogin(userName);
+        saveUserIDLogin(userID);
     }
 
+    public static void saveTotalTime() {
+        String key = String.format("%s-total-time", getUserLogin());
+        SharedPreferences.Editor editor = spf.edit();
+        editor.putInt(key, getTotalTime() + 1);
+        editor.commit();
+    }
+
+    public static int getTotalTime() {
+        String key = String.format("%s-total-time", getUserLogin());
+        return spf.getInt(key, 0);
+    }
 }

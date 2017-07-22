@@ -19,6 +19,14 @@ public class MenuActivity extends AppCompatActivity {
         imgremark = (ImageView)findViewById(R.id.imgremark);
         imgsetting = (ImageView)findViewById(R.id.imgsetting);
 
+        imgremark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuActivity.this, statisticActivity.class);
+                startActivity(intent);
+            }
+        });
+
         imgstart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

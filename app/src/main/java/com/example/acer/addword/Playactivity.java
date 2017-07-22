@@ -1,12 +1,19 @@
 package com.example.acer.addword;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,7 +41,6 @@ import okhttp3.Response;
 public class Playactivity extends AppCompatActivity {
 
     int level = 1;
-    boolean permitInput = true;
     int hiddenChar = 0;
     int numberanswer = 0;
     int maxAnswer = 0;
@@ -47,6 +53,7 @@ public class Playactivity extends AppCompatActivity {
     JSONArray allLevel;
     Handler handler;
     int[] second;
+    AlertDialog builder;
 
 
     @Override
@@ -131,6 +138,7 @@ public class Playactivity extends AppCompatActivity {
                 second = new int[]{Integer.parseInt(time)};
                 TextView tvTime = (TextView) findViewById(R.id.tv_pTime);
                 tvTime.setText(String.valueOf(second[0]));
+                new PreferenceUtil(Playactivity.this).saveTotalTime();
                 handler = new Handler();
                 handler.postDelayed(runTime, 1000);
             }
@@ -152,6 +160,12 @@ public class Playactivity extends AppCompatActivity {
 
     public void displayVocabulary(JSONArray vocab, int position) throws JSONException {
         final LinearLayout layoutShuffle = (LinearLayout) findViewById(R.id.layoutShuffle);
+        layoutShuffle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openSoftKeyboard();
+            }
+        });
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -213,12 +227,9 @@ public class Playactivity extends AppCompatActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         char unicodeChar = (char) event.getUnicodeChar();
         if (keyCode == KeyEvent.KEYCODE_DEL) {
-            permitInput = true;
             removeVocabulary();
         } else {
-            if (permitInput) {
-                addVocabulary(String.valueOf(unicodeChar));
-            }
+            addVocabulary(String.valueOf(unicodeChar));
         }
         return super.onKeyDown(keyCode, event);
     }
@@ -231,10 +242,13 @@ public class Playactivity extends AppCompatActivity {
             if (value.equalsIgnoreCase("")) {
                 tv.setText(character.toUpperCase());
                 orderPosition.put(key);
-                checkAnswer(character, key);
-                checkNewVocab();
+                //checkAnswer(character, key);
                 break;
             }
+        }
+
+        if (orderPosition.length() == mapPosition.size()) {
+            checkNewVocab();
         }
     }
 
@@ -248,8 +262,8 @@ public class Playactivity extends AppCompatActivity {
                         tv = mapPosition.get(orderPosition.getInt(orderPosition.length() - 1));
                         tv.setText("");
                         orderPosition.remove(orderPosition.length() - 1);
-                        TextView tv_pResult = (TextView) findViewById(R.id.tv_pResult);
-                        tv_pResult.setText("");
+                        TextView tvResult = (TextView) findViewById(R.id.tv_pResult);
+                        tvResult.setText("");
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -258,20 +272,17 @@ public class Playactivity extends AppCompatActivity {
         }
     }
 
-    public void checkAnswer(final String myCharacter, final int position) {
-        TextView tv_pResult = (TextView) findViewById(R.id.tv_pResult);
-        tv_pResult.setTextSize(50);
-
-        final String correct = String.valueOf(currentVocab.charAt(position));
-        if (myCharacter.equalsIgnoreCase(correct)) {
-            tv_pResult.setText("O");
-            permitInput = true;
-        } else {
-            tv_pResult.setText("X");
-            permitInput = false;
-        }
-
-    }
+//    public void checkAnswer(final String myCharacter, final int position) {
+//        TextView tvResult = (TextView) findViewById(R.id.tvResult);
+//        tvResult.setTextSize(50);
+//
+//        final String correct = String.valueOf(currentVocab.charAt(position));
+//        if (myCharacter.equalsIgnoreCase(correct)) {
+//            tvResult.setText("O");
+//        } else {
+//            tvResult.setText("X");
+//        }
+//    }
 
     public void checkNewVocab() {
         boolean complete = false;
@@ -290,24 +301,43 @@ public class Playactivity extends AppCompatActivity {
         if (complete) {
             mapPosition.clear();
             orderPosition = new JSONArray();
-            currentVocab = "";
+
             currentVocabPosition += 1;
             correctAnswer += 1;
             new PreferenceUtil(this).plusPointByLevel(level);
             tvscoce_p.setText(correctAnswer + " / " + maxAnswer);
+
+            builder = new AlertDialog.Builder(this).create();
+            View view = View.inflate(this, R.layout.custom_dialog_correct, null);
+            TextView tv = (TextView) view.findViewById(R.id.tvVocab);
+            tv.setText(currentVocab);
+            builder.setView(view);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        if (this != null) builder.show();
+                    } catch (Exception ex) {};
+                }
+            });
+            currentVocab = "";
             checkLevel(false);
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     try {
+                        if (this != null) builder.dismiss();
                         displayVocabulary(vocabularyDataList, currentVocabPosition);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
                 }
-            }, 3000);
-
+            }, 1000);
+        } else {
+            // dialog กรณีที่ตอบผิด
+            Toast toast = Toast.makeText(Playactivity.this, "ตอบผิดคะ กรุณราลองอีกที", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
         }
     }
 
@@ -331,17 +361,24 @@ public class Playactivity extends AppCompatActivity {
                     in.putExtra("level", hasLevel);
                     handler.removeCallbacks(runTime);
                     startActivity(in);
+                    builder.dismiss();
                     finish();
                 } else {
                     Intent in = new Intent(this, DisplaySummary.class);
                     startActivity(in);
                     handler.removeCallbacks(runTime);
+                    builder.dismiss();
                     finish();
                 }
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    public void openSoftKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
     }
 }
 

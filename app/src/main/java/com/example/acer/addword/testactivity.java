@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -34,7 +35,7 @@ import okhttp3.Response;
 
 public class testactivity extends AppCompatActivity {
 
-    boolean permitInput = true;
+    //boolean permitInput = true;
     int hiddenChar = 0;
     int maxAnswer = 0;
     int currentVocabPosition = 0;
@@ -204,12 +205,9 @@ public class testactivity extends AppCompatActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         char unicodeChar = (char) event.getUnicodeChar();
         if (keyCode == KeyEvent.KEYCODE_DEL) {
-            permitInput = true;
             removeVocabulary();
         } else {
-            if (permitInput) {
-                addVocabulary(String.valueOf(unicodeChar));
-            }
+            addVocabulary(String.valueOf(unicodeChar));
         }
         return super.onKeyDown(keyCode, event);
     }
@@ -222,10 +220,13 @@ public class testactivity extends AppCompatActivity {
             if (value.equalsIgnoreCase("")) {
                 tv.setText(character.toUpperCase());
                 orderPosition.put(key);
-                checkAnswer(character, key);
-                checkNewVocab();
+                //checkAnswer(character, key);
                 break;
             }
+        }
+
+        if (orderPosition.length() == mapPosition.size()) {
+            checkNewVocab();
         }
     }
 
@@ -249,19 +250,17 @@ public class testactivity extends AppCompatActivity {
         }
     }
 
-    public void checkAnswer(final String myCharacter, final int position) {
-        TextView tvResult = (TextView) findViewById(R.id.tvResult);
-        tvResult.setTextSize(50);
-
-        final String correct = String.valueOf(currentVocab.charAt(position));
-        if (myCharacter.equalsIgnoreCase(correct)) {
-            tvResult.setText("O");
-            permitInput = true;
-        } else {
-            tvResult.setText("X");
-            permitInput = false;
-        }
-    }
+//    public void checkAnswer(final String myCharacter, final int position) {
+//        TextView tvResult = (TextView) findViewById(R.id.tvResult);
+//        tvResult.setTextSize(50);
+//
+//        final String correct = String.valueOf(currentVocab.charAt(position));
+//        if (myCharacter.equalsIgnoreCase(correct)) {
+//            tvResult.setText("O");
+//        } else {
+//            tvResult.setText("X");
+//        }
+//    }
 
     public void checkNewVocab() {
         boolean complete = false;
@@ -294,7 +293,12 @@ public class testactivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
-            }, 3000);
+            }, 500);
+        } else {
+            // dialog กรณีที่ตอบผิด
+            Toast toast = Toast.makeText(testactivity.this, "ตอบผิดคะ กรุณราลองอีกที", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
         }
     }
 

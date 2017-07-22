@@ -34,14 +34,16 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/btnmenu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="MENU"/>
+            android:text="MENU" />
 
         <Button
+            android:id="@+id/btnsta"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Statistic"/>
+            android:text="Statistic" />
 
     </LinearLayout>
 
@@ -72,4 +74,12 @@
         android:layout_centerVertical="true"
         android:text="999"
         android:textSize="70dp"/>
+
+    <TextView
+        android:id="@+id/tvTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvScore"
+        android:layout_centerHorizontal="true"
+        android:text="99 วินาที" />
 </RelativeLayout>

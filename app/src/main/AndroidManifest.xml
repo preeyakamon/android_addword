@@ -25,7 +25,8 @@
         <activity
             android:name=".Playactivity"
             android:windowSoftInputMode="stateVisible" />
-        <activity android:name=".DisplaySummary"></activity>
+        <activity android:name=".DisplaySummary" />
+        <activity android:name=".statisticActivity"></activity>
     </application>
 
 </manifest>
