@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.acer.addword.edituseractivity">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:orientation="vertical"
+        android:layout_marginTop="50dp"
+        android:id="@+id/linearLayout2"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:weightSum="1">
+
+        <ImageView
+            android:id="@+id/imageView8"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="0.38"
+            app:srcCompat="@drawable/edituser" />
+
+        <EditText
+            android:id="@+id/etname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="13"
+            android:hint="name :"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/etpassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="13"
+            android:hint="Old-Password :"
+            android:inputType="textPassword" />
+
+        <EditText
+            android:id="@+id/etnewpassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.38"
+            android:ems="10"
+            android:inputType="textPassword"
+            android:hint="New-Password :" />
+
+        <EditText
+            android:id="@+id/etconfirmpassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.38"
+            android:ems="10"
+            android:inputType="textPassword"
+            android:hint="Confirm-Password :"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnsave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="31dp"
+        android:text="Save"
+        android:layout_marginEnd="44dp"
+        android:layout_below="@+id/linearLayout2"
+        android:layout_toStartOf="@+id/btncancel" />
+
+    <Button
+        android:id="@+id/btncancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="46dp"
+        android:text="Cancel"
+        android:layout_alignBaseline="@+id/btnsave"
+        android:layout_alignBottom="@+id/btnsave"
+        android:layout_alignEnd="@+id/linearLayout2" />
+
+    <Button
+        android:id="@+id/btndel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnsave"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="33dp"
+        android:text="Delete Account" />
+</RelativeLayout>

@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         btnregister = (Button) findViewById(R.id.btnregister);
 
         if (new PreferenceUtil(this).getUserLogin() != null) {
+            Log.d("TAG", "onCreate: " + new PreferenceUtil(this).getUserLogin());
             startActivity(new Intent(this, MenuActivity.class));
             finish();
         }
@@ -85,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
                                 Intent intent = new Intent(MainActivity.this, MenuActivity.class);
                                 startActivity(intent);
+                                finish();
                             } else {
                                 runOnUiThread(new Runnable() {
                                     @Override

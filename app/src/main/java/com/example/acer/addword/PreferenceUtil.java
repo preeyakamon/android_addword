@@ -94,6 +94,12 @@ public class PreferenceUtil {
         saveUserIDLogin(userID);
     }
 
+    public static void removeAllSession() {
+        SharedPreferences.Editor editor = spf.edit();
+        editor.clear();
+        editor.commit();
+    }
+
     public static void saveTotalTime() {
         String key = String.format("%s-total-time", getUserLogin());
         SharedPreferences.Editor editor = spf.edit();

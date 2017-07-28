@@ -6,12 +6,15 @@
     android:layout_height="match_parent"
     tools:context="com.example.acer.addword.MenuActivity">
 
+
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_marginTop="140dp"
+        android:id="@+id/linearLayout4"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
+        android:layout_centerHorizontal="true">
 
         <ImageView
             android:id="@+id/imgstart"
@@ -20,15 +23,32 @@
             app:srcCompat="@drawable/newplay" />
 
         <ImageView
-            android:id="@+id/imgremark"
+            android:id="@+id/imgsta"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/remark" />
+            android:layout_marginTop="30dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/statistic1" />
 
         <ImageView
             android:id="@+id/imgsetting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="30dp"
             app:srcCompat="@drawable/newsetting" />
+
+
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btnlogout"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:text="Logout" />
+
 </RelativeLayout>

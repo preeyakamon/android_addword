@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 public class MenuActivity extends AppCompatActivity {
 
-    ImageView imgstart, imgremark, imgsetting;
+    ImageView imgstart, imgsta, imgsetting;
+    Button btnlogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,10 +18,11 @@ public class MenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
 
         imgstart = (ImageView)findViewById(R.id.imgstart);
-        imgremark = (ImageView)findViewById(R.id.imgremark);
+        imgsta = (ImageView)findViewById(R.id.imgsta);
         imgsetting = (ImageView)findViewById(R.id.imgsetting);
+        btnlogout = (Button) findViewById(R.id.btnlogout);
 
-        imgremark.setOnClickListener(new View.OnClickListener() {
+        imgsta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MenuActivity.this, statisticActivity.class);
@@ -32,6 +35,23 @@ public class MenuActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MenuActivity.this, testactivity.class);
                 startActivity(intent);
+            }
+        });
+
+        imgsetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuActivity.this, edituseractivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btnlogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new PreferenceUtil(MenuActivity.this).removeAllSession();
+                startActivity(new Intent(MenuActivity.this, MainActivity.class));
+                finish();
             }
         });
     }
