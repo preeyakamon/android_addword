@@ -44,7 +44,17 @@ public class registerActivity extends AppCompatActivity {
                 String name = etname.getText().toString();
                 String username = etusername.getText().toString();
                 String password = etpassword.getText().toString();
+                String confirm = etconfirm.getText().toString();
                 String url = getString(R.string.ip_address) + "/addword/action/registeruser.php";
+
+                if (password.equals(confirm)) {
+                   // Toast.makeText(getApplicationContext(), "Matches", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Password ไม่ตรงกัน กรุณากรอกใหม่", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+
                 OkHttpClient client = new OkHttpClient();
                 RequestBody body = new FormBody.Builder()
                         .add("name", name)
@@ -65,17 +75,34 @@ public class registerActivity extends AppCompatActivity {
                     public void onResponse(Call call, Response response) throws IOException {
                         final String formServer = response.body().string();
                         try {
-                            JSONObject json = new JSONObject(formServer);
+                            final JSONObject json = new JSONObject(formServer);
+                            Log.d("TAG", "onResponse: " + json);
                             if (json.getBoolean("result")) { // if result = true
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        onBackPressed();
+                                        try {
+                                            onBackPressed();
+                                            Toast.makeText(registerActivity.this, json.getString("message"), Toast.LENGTH_SHORT).show();
+                                        }catch (JSONException e){
+                                            e.printStackTrace();
+                                        }
+
                                     }
                                 });
                             } else {
-                                Toast.makeText(registerActivity.this, "ข้อมูลผิดพลาด กรุณากรอกอีกครั้ง", Toast.LENGTH_SHORT).show();
-                            }
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        try {
+                                            Toast.makeText(registerActivity.this, json.getString("message"), Toast.LENGTH_SHORT).show();
+                                        }catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+
+                                        }
+                                });
+                                }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

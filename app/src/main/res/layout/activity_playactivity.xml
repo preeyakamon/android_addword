@@ -26,6 +26,14 @@
         android:orientation="horizontal"></LinearLayout>
 
     <TextView
+        android:id="@+id/tvTranslate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layoutShuffle"
+        android:textSize="24dp"
+        android:gravity="center" />
+
+    <TextView
         android:id="@+id/tv_pResult"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -51,4 +59,22 @@
         android:layout_below="@+id/tvname_p"
         android:textSize="15dp"
         android:text="TextView" />
+
+    <Button
+        android:id="@+id/btnskip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/layoutShuffle"
+        android:layout_marginEnd="31dp"
+        android:layout_marginTop="109dp"
+        android:text="Skip" />
+
+    <Button
+        android:id="@+id/btnclear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/tvname_p"
+        android:layout_alignTop="@+id/btnskip"
+        android:text="Clear" />
 </RelativeLayout>

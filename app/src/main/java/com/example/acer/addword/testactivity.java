@@ -7,7 +7,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +38,9 @@ import okhttp3.Response;
 
 public class testactivity extends AppCompatActivity {
 
+    Button btnclear, btnskip;
+
+
     //boolean permitInput = true;
     int hiddenChar = 0;
     int maxAnswer = 0;
@@ -43,7 +49,7 @@ public class testactivity extends AppCompatActivity {
     Map<Integer, TextView> mapPosition;
     JSONArray orderPosition, vocabularyDataList;
     String currentVocab = "";
-    TextView tvscoce;
+    TextView tvscoce, tvTranslate;
     JSONArray alllevel;
     Handler handler;
     int[] second;
@@ -54,6 +60,47 @@ public class testactivity extends AppCompatActivity {
         setContentView(R.layout.activity_testactivity);
 
         tvscoce = (TextView) findViewById(R.id.tvscoce);
+        tvTranslate = (TextView) findViewById(R.id.tvTranslate);
+        btnclear = (Button) findViewById(R.id.btnclear);
+        btnskip = (Button) findViewById(R.id.btnskip);
+
+        btnskip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mapPosition.clear();
+                orderPosition = new JSONArray();
+                currentVocab = "";
+                currentVocabPosition += 1;
+                try {
+                    displayVocabulary(vocabularyDataList, currentVocabPosition);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        btnclear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (orderPosition != null) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            for (int i = 0; i < orderPosition.length(); i++) {
+                                TextView tv = null;
+                                try {
+                                    tv = mapPosition.get(orderPosition.getInt(i));
+                                    tv.setText("");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            orderPosition = new JSONArray();
+                        }
+                    });
+                }
+            }
+        });
 
         mapPosition = new HashMap<>();
         orderPosition = new JSONArray();
@@ -144,9 +191,11 @@ public class testactivity extends AppCompatActivity {
 
     public void displayVocabulary(JSONArray vocab, int position) throws JSONException {
         final LinearLayout layoutShuffle = (LinearLayout) findViewById(R.id.layoutShuffle);
+
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                tvTranslate.setText("");
                 layoutShuffle.removeAllViews();
             }
         });
@@ -180,10 +229,7 @@ public class testactivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                TextView translate = new TextView(testactivity.this);
-                translate.setTextSize(26);
-                translate.setText(String.format(" (%s)", transName));
-                layoutShuffle.addView(translate);
+                tvTranslate.setText("("+transName+")");
             }
         });
     }

@@ -59,7 +59,7 @@ public class edituseractivity extends AppCompatActivity {
                 String url = getString(R.string.ip_address) + "/addword/action/androidedituser.php";
 
                 if (newpassword.equals(confirmpassword))
-                    Toast.makeText(getApplicationContext(), "Matches", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "แก้ไขข้อมูลเรียบร้อย", Toast.LENGTH_SHORT).show();
                 else {
                     Toast.makeText(getApplicationContext(), newpassword + " != " + confirmpassword, Toast.LENGTH_SHORT).show();
                     return;

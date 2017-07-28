@@ -10,10 +10,10 @@
         android:id="@+id/tvTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textSize="25dp"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
+        android:text="TextView"
+        android:textSize="25dp" />
 
     <LinearLayout
         android:id="@+id/layoutShuffle"
@@ -24,6 +24,14 @@
         android:layout_marginTop="60dp"
         android:gravity="center"
         android:orientation="horizontal"></LinearLayout>
+
+    <TextView
+        android:id="@+id/tvTranslate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layoutShuffle"
+        android:textSize="24dp"
+        android:gravity="center" />
 
     <TextView
         android:id="@+id/tvResult"
@@ -40,16 +48,34 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:textSize="30dp"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textSize="30dp" />
 
     <TextView
         android:id="@+id/tvscoce"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="15dp"
-        android:text="TextView"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/tvname"
-        android:layout_alignParentStart="true" />
+        android:text="TextView"
+        android:textSize="15dp" />
+
+    <Button
+        android:id="@+id/btnskip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/layoutShuffle"
+        android:layout_marginEnd="26dp"
+        android:layout_marginTop="82dp"
+        android:text="Skip" />
+
+    <Button
+        android:id="@+id/btnclear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btnskip"
+        android:layout_alignEnd="@+id/tvname"
+        android:text="Clear" />
 
 </RelativeLayout>
