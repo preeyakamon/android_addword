@@ -3,6 +3,7 @@ package com.example.acer.addword;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -57,6 +58,7 @@ public class Playactivity extends AppCompatActivity {
     Handler handler;
     int[] second;
     AlertDialog builder;
+    SoundUtil sound;
 
 
     @Override
@@ -68,6 +70,8 @@ public class Playactivity extends AppCompatActivity {
         tvTranslate = (TextView) findViewById(R.id.tvTranslate);
         btnclear = (Button) findViewById(R.id.btnclear);
         btnskip = (Button) findViewById(R.id.btnskip);
+
+        sound = new SoundUtil(this);
 
         btnskip.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -198,6 +202,20 @@ public class Playactivity extends AppCompatActivity {
                 updateTime(String.valueOf(second[0]));
             } else {
                 checkLevel(true);
+                AlertDialog.Builder builder = new AlertDialog.Builder(Playactivity.this);
+                builder.setMessage("แย่จัง!! หมดเวลาแล้ว เล่นใหม่นะ ")
+                        .setCancelable(false)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(Playactivity.this, MenuActivity.class);
+                                startActivity(intent);
+                                new PreferenceUtil(Playactivity.this).clearSession();
+                                finish();
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
             }
         }
     };
@@ -278,6 +296,7 @@ public class Playactivity extends AppCompatActivity {
     }
 
     public void addVocabulary(String character) {
+        sound.soundButton(null);
         SortedSet<Integer> keys = new TreeSet<>(mapPosition.keySet());
         for (Integer key : keys) {
             TextView tv = mapPosition.get(key);
@@ -342,6 +361,7 @@ public class Playactivity extends AppCompatActivity {
             }
         }
         if (complete) {
+            sound.soundCorrect(null);
             mapPosition.clear();
             orderPosition = new JSONArray();
 
@@ -377,6 +397,7 @@ public class Playactivity extends AppCompatActivity {
                 }
             }, 1000);
         } else {
+            sound.soundWrong(null);
             // dialog กรณีที่ตอบผิด
             Toast toast = Toast.makeText(Playactivity.this, "ตอบผิดคะ กรุณราลองอีกที", Toast.LENGTH_LONG);
             toast.setGravity(Gravity.CENTER, 0, 0);
@@ -399,6 +420,7 @@ public class Playactivity extends AppCompatActivity {
                 }
 
                 if (upLevel == true) {
+                    sound.soundPass(null);
                     Log.d("PlayActivityLog", "go to: " + hasLevel);
                     Intent in = new Intent(this, Playactivity.class);
                     in.putExtra("level", hasLevel);
@@ -407,6 +429,7 @@ public class Playactivity extends AppCompatActivity {
                     builder.dismiss();
                     finish();
                 } else {
+                    sound.soundPass(null);
                     Intent in = new Intent(this, DisplaySummary.class);
                     startActivity(in);
                     handler.removeCallbacks(runTime);
@@ -422,6 +445,12 @@ public class Playactivity extends AppCompatActivity {
     public void openSoftKeyboard() {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        handler.removeCallbacks(runTime);
     }
 }
 

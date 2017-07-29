@@ -40,6 +40,7 @@
         android:layout_below="@+id/layoutShuffle"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="128dp"
+        android:visibility="gone"
         android:text="TextView" />
 
     <TextView

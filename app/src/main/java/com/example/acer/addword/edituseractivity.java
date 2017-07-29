@@ -86,6 +86,7 @@ public class edituseractivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
 
+
                    }
                 });
 
@@ -146,7 +147,7 @@ public class edituseractivity extends AppCompatActivity {
                                                             @Override
                                                             public void run() {
                                                                 try {
-                                                                    Toast.makeText(edituseractivity.this, obj.getString("message"), Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(edituseractivity.this, obj.getString("ลบบัญชีผู้ใช้เรียบร้อยแล้ว"), Toast.LENGTH_SHORT).show();
                                                                 } catch (JSONException e) {
                                                                     e.printStackTrace();
                                                                 }

@@ -1,5 +1,7 @@
 package com.example.acer.addword;
 
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +11,7 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -40,7 +43,6 @@ public class testactivity extends AppCompatActivity {
 
     Button btnclear, btnskip;
 
-
     //boolean permitInput = true;
     int hiddenChar = 0;
     int maxAnswer = 0;
@@ -53,6 +55,8 @@ public class testactivity extends AppCompatActivity {
     JSONArray alllevel;
     Handler handler;
     int[] second;
+    AlertDialog builder;
+    SoundUtil sound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +67,9 @@ public class testactivity extends AppCompatActivity {
         tvTranslate = (TextView) findViewById(R.id.tvTranslate);
         btnclear = (Button) findViewById(R.id.btnclear);
         btnskip = (Button) findViewById(R.id.btnskip);
+
+
+        sound = new SoundUtil(this);
 
         btnskip.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -192,6 +199,12 @@ public class testactivity extends AppCompatActivity {
     public void displayVocabulary(JSONArray vocab, int position) throws JSONException {
         final LinearLayout layoutShuffle = (LinearLayout) findViewById(R.id.layoutShuffle);
 
+        layoutShuffle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openSoftKeyboard();
+            }
+        });
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -229,7 +242,7 @@ public class testactivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                tvTranslate.setText("("+transName+")");
+                tvTranslate.setText("(" + transName + ")");
             }
         });
     }
@@ -258,7 +271,10 @@ public class testactivity extends AppCompatActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+
     public void addVocabulary(String character) {
+        sound = new SoundUtil(this);
+        sound.soundButton(null);
         SortedSet<Integer> keys = new TreeSet<>(mapPosition.keySet());
         for (Integer key : keys) {
             TextView tv = mapPosition.get(key);
@@ -323,17 +339,36 @@ public class testactivity extends AppCompatActivity {
             }
         }
         if (complete) {
+            sound.soundCorrect(null);
             mapPosition.clear();
             orderPosition = new JSONArray();
-            currentVocab = "";
+            //currentVocab = "";
             currentVocabPosition += 1;
             correctAnswer += 1;
             tvscoce.setText(correctAnswer + " / " + maxAnswer);
+
+            builder = new AlertDialog.Builder(this).create();
+            View view = View.inflate(this, R.layout.custom_dialog_correct, null);
+            TextView tv = (TextView) view.findViewById(R.id.tvVocab);
+            tv.setText(currentVocab);
+            builder.setView(view);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        if (this != null) builder.show();
+                    } catch (Exception ex) {
+                    }
+                    ;
+                }
+            });
+            currentVocab = "";
             checkLevel(false);
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     try {
+                        if (this != null) builder.dismiss();
                         displayVocabulary(vocabularyDataList, currentVocabPosition);
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -341,6 +376,7 @@ public class testactivity extends AppCompatActivity {
                 }
             }, 500);
         } else {
+            sound.soundWrong(null);
             // dialog กรณีที่ตอบผิด
             Toast toast = Toast.makeText(testactivity.this, "ตอบผิดคะ กรุณราลองอีกที", Toast.LENGTH_LONG);
             toast.setGravity(Gravity.CENTER, 0, 0);
@@ -356,6 +392,7 @@ public class testactivity extends AppCompatActivity {
                     int level = Integer.parseInt(item.getString("level_id"));
                     int step = Integer.parseInt(item.getString("number"));
                     if (correctAnswer >= step) {
+                        sound.soundPass(null);
                         new PreferenceUtil(this).addBonusPoint(level);
                         Intent in = new Intent(testactivity.this, Playactivity.class);
                         in.putExtra("level", level);
@@ -365,6 +402,7 @@ public class testactivity extends AppCompatActivity {
                         break;
                     }
                     if (i == (alllevel.length() - 1)) {
+                        sound.soundPass(null);
                         new PreferenceUtil(this).addBonusPoint(1);
                         Intent in = new Intent(testactivity.this, Playactivity.class);
                         in.putExtra("level", 1);
@@ -378,6 +416,18 @@ public class testactivity extends AppCompatActivity {
                 ex.printStackTrace();
             }
         }
+
+    }
+
+    public void openSoftKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        handler.removeCallbacks(runTime);
     }
 }
 

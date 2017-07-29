@@ -27,11 +27,16 @@ public class DisplaySummary extends AppCompatActivity {
     TextView tvUsername, tvScore, tvTime;
     int totalPoint, levelMax;
     Button btnmenu, btnsta;
+    SoundUtil sound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_summary);
+
+        sound = new SoundUtil(this);
+        sound.soundEnd(null);
+
 
         tvUsername = (TextView) findViewById(R.id.tvUsername);
         tvScore = (TextView) findViewById(R.id.tvScore);
