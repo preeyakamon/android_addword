@@ -54,40 +54,42 @@ public class edituseractivity extends AppCompatActivity {
                 int userid = new PreferenceUtil(edituseractivity.this).getUserIDLogin();
                 String name = etname.getText().toString();
                 String password = etpassword.getText().toString();
-                String newpassword = etnewpassword.getText().toString();
+                final String newpassword = etnewpassword.getText().toString();
                 String confirmpassword = etconfirmpassword.getText().toString();
                 String url = getString(R.string.ip_address) + "/addword/action/androidedituser.php";
 
                 if (newpassword.equals(confirmpassword))
                     Toast.makeText(getApplicationContext(), "แก้ไขข้อมูลเรียบร้อย", Toast.LENGTH_SHORT).show();
                 else {
-                    Toast.makeText(getApplicationContext(), newpassword + " != " + confirmpassword, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Password ไม่ตรงกัน กรุณาใส่ใหม่", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
 
-               OkHttpClient client = new OkHttpClient();
-               RequestBody body = new FormBody.Builder()
-                       .add("user_id", String.valueOf(userid))
-                       .add("name", name)
-                       .add("password", password)
-                       .add("newpassword", newpassword)
-                       .build();
-               Request request = new Request.Builder()//การเตรียมข้อมูลเพื่อเรียกใช้
-                       .url(url)
-                       .post(body)
-                       .build();
+                OkHttpClient client = new OkHttpClient();
+                RequestBody body = new FormBody.Builder()
+                        .add("user_id", String.valueOf(userid))
+                        .add("name", name)
+                        .add("password", password)
+                        .add("newpassword", newpassword)
+                        .build();
+                Request request = new Request.Builder()//การเตรียมข้อมูลเพื่อเรียกใช้
+                        .url(url)
+                        .post(body)
+                        .build();
                 client.newCall(request).enqueue(new Callback() {
                     @Override
-                      public void onFailure(Call call, IOException e) {
+                    public void onFailure(Call call, IOException e) {
 
                     }
 
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
+                        new PreferenceUtil(edituseractivity.this).clearSession();
+                        Intent intent = new Intent(edituseractivity.this, MainActivity.class);
+                        startActivity(intent);
 
-
-                   }
+                    }
                 });
 
             }
@@ -108,7 +110,7 @@ public class edituseractivity extends AppCompatActivity {
                 final View view = inflater.inflate(R.layout.custom_remove_confirm, null);
                 new AlertDialog.Builder(edituseractivity.this)
                         .setView(view)
-                        .setPositiveButton("remove", new DialogInterface.OnClickListener() {
+                        .setPositiveButton("ลบข้อมูล", new DialogInterface.OnClickListener() {
 
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 try {

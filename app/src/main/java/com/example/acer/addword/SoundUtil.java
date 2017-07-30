@@ -29,6 +29,12 @@ public class SoundUtil {
     }
 
     public void soundWrong(final SoundListener listener) {
+        if (mp != null) {
+            if (mp.isPlaying()) {
+                mp.stop();
+                mp.release();
+            }
+        }
         mp = MediaPlayer.create(ctx, R.raw.wrong);
         play();
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -41,6 +47,12 @@ public class SoundUtil {
     }
 
     public void soundCorrect(final SoundListener listener) {
+        if (mp != null) {
+            if (mp.isPlaying()) {
+                mp.stop();
+                mp.release();
+            }
+        }
         mp = MediaPlayer.create(ctx, R.raw.correct);
         play();
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -53,6 +65,12 @@ public class SoundUtil {
     }
 
     public void soundPass(final SoundListener listener) {
+        if (mp != null) {
+            if (mp.isPlaying()) {
+                mp.stop();
+                mp.release();
+            }
+        }
         mp = MediaPlayer.create(ctx, R.raw.past);
         play();
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -65,6 +83,12 @@ public class SoundUtil {
     }
 
     public void soundEnd(final SoundListener listener) {
+        if (mp != null) {
+            if (mp.isPlaying()) {
+                mp.stop();
+                mp.release();
+            }
+        }
         mp = MediaPlayer.create(ctx, R.raw.end);
         play();
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -77,6 +101,12 @@ public class SoundUtil {
     }
 
     public void soundSplash(final SoundListener listener) {
+        if (mp != null) {
+            if (mp.isPlaying()) {
+                mp.stop();
+                mp.release();
+            }
+        }
         mp = MediaPlayer.create(ctx, R.raw.splash);
         play();
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -89,6 +119,12 @@ public class SoundUtil {
     }
 
     public void soundButton(final SoundListener listener) {
+        if (mp != null) {
+            if (mp.isPlaying()) {
+                mp.stop();
+                mp.release();
+            }
+        }
         mp = MediaPlayer.create(ctx, R.raw.button);
         play();
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
