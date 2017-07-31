@@ -421,6 +421,8 @@ public class Playactivity extends AppCompatActivity {
 
                 if (upLevel == true) {
                     sound.soundPass(null);
+
+                    //ใส่ไดอาล็อคตรงนี้
                     Log.d("PlayActivityLog", "go to: " + hasLevel);
                     Intent in = new Intent(this, Playactivity.class);
                     in.putExtra("level", hasLevel);
@@ -433,6 +435,7 @@ public class Playactivity extends AppCompatActivity {
                     Intent in = new Intent(this, DisplaySummary.class);
                     startActivity(in);
                     handler.removeCallbacks(runTime);
+
                     builder.dismiss();
                     finish();
                 }

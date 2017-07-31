@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/login1"
     tools:context="com.example.acer.addword.MainActivity">
 
     <LinearLayout
@@ -13,7 +14,7 @@
         android:layout_above="@+id/btnlogin"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
-        android:background="?android:attr/colorControlHighlight"
+        android:background="#FFFAFA"
         android:orientation="vertical"
         android:padding="20dp">
 
@@ -49,11 +50,12 @@
         android:id="@+id/btnlogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="49dp"
-        android:text="Login"
         android:layout_alignBaseline="@+id/btnregister"
         android:layout_alignBottom="@+id/btnregister"
-        android:layout_alignStart="@+id/linearLayout" />
+        android:layout_alignStart="@+id/linearLayout"
+        android:layout_marginStart="49dp"
+        android:textSize="17dp"
+        android:text="Login" />
 
     <Button
         android:id="@+id/btnregister"
@@ -62,6 +64,7 @@
         android:layout_centerVertical="true"
         android:layout_marginStart="43dp"
         android:layout_toEndOf="@+id/btnlogin"
+        android:textSize="17dp"
         android:text="Register" />
 
 

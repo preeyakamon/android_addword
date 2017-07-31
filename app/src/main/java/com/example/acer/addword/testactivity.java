@@ -2,6 +2,7 @@ package com.example.acer.addword;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -394,9 +395,6 @@ public class testactivity extends AppCompatActivity {
                     if (correctAnswer >= step) {
                         sound.soundPass(null);
                         new PreferenceUtil(this).addBonusPoint(level);
-                        Intent in = new Intent(testactivity.this, Playactivity.class);
-                        in.putExtra("level", level);
-                        startActivity(in);
                         handler.removeCallbacks(runTime);
                         finish();
                         break;
@@ -410,6 +408,7 @@ public class testactivity extends AppCompatActivity {
                         handler.removeCallbacks(runTime);
                         finish();
                         break;
+
                     }
                 }
             } catch (Exception ex) {
