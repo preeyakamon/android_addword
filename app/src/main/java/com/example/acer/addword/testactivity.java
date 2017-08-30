@@ -394,6 +394,9 @@ public class testactivity extends AppCompatActivity {
                     int step = Integer.parseInt(item.getString("number"));
                     if (correctAnswer >= step) {
                         sound.soundPass(null);
+                        Intent in = new Intent(testactivity.this, Playactivity.class);
+                        in.putExtra("level", 1);
+                        startActivity(in);
                         new PreferenceUtil(this).addBonusPoint(level);
                         handler.removeCallbacks(runTime);
                         finish();

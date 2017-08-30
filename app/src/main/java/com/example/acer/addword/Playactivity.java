@@ -285,7 +285,7 @@ public class Playactivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    public boolean onKeyDown(int keyCode, KeyEvent event) {//แป้นพิมพ์
         char unicodeChar = (char) event.getUnicodeChar();
         if (keyCode == KeyEvent.KEYCODE_DEL) {
             removeVocabulary();
