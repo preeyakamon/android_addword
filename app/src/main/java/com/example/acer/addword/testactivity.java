@@ -388,30 +388,46 @@ public class testactivity extends AppCompatActivity {
     public void checkLevel(boolean timeOut) {
         if (correctAnswer == maxAnswer || timeOut) {
             try {
+                Log.d("AddWordLog", "call checkLevel");
                 for (int i = 0; i < alllevel.length(); i++) {
                     JSONObject item = alllevel.getJSONObject(i);
-                    int level = Integer.parseInt(item.getString("level_id"));
+                    final int level = Integer.parseInt(item.getString("level_id"));
                     int step = Integer.parseInt(item.getString("number"));
                     if (correctAnswer >= step) {
-                        sound.soundPass(null);
-                        Intent in = new Intent(testactivity.this, Playactivity.class);
-                        in.putExtra("level", 1);
-                        startActivity(in);
-                        new PreferenceUtil(this).addBonusPoint(level);
-                        handler.removeCallbacks(runTime);
-                        finish();
+                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                        builder.setMessage("YOU LEVEL " + correctAnswer)
+                                .setCancelable(false)
+                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        sound.soundPass(null);
+                                        Intent in = new Intent(testactivity.this, Playactivity.class);
+                                        in.putExtra("level", level);
+                                        startActivity(in);
+                                        new PreferenceUtil(testactivity.this).addBonusPoint(level);
+                                        handler.removeCallbacks(runTime);
+                                        finish();
+                                    }
+                                }).show();
                         break;
                     }
                     if (i == (alllevel.length() - 1)) {
-                        sound.soundPass(null);
-                        new PreferenceUtil(this).addBonusPoint(1);
-                        Intent in = new Intent(testactivity.this, Playactivity.class);
-                        in.putExtra("level", 1);
-                        startActivity(in);
-                        handler.removeCallbacks(runTime);
-                        finish();
+                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                        builder.setMessage("YOU LEVEL " + 1)
+                                .setCancelable(false)
+                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        sound.soundPass(null);
+                                        Intent in = new Intent(testactivity.this, Playactivity.class);
+                                        in.putExtra("level", 1);
+                                        startActivity(in);
+                                        new PreferenceUtil(testactivity.this).addBonusPoint(1);
+                                        handler.removeCallbacks(runTime);
+                                        finish();
+                                    }
+                                }).show();
                         break;
-
                     }
                 }
             } catch (Exception ex) {
