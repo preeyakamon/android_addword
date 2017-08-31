@@ -388,14 +388,14 @@ public class testactivity extends AppCompatActivity {
     public void checkLevel(boolean timeOut) {
         if (correctAnswer == maxAnswer || timeOut) {
             try {
-                Log.d("AddWordLog", "call checkLevel");
                 for (int i = 0; i < alllevel.length(); i++) {
                     JSONObject item = alllevel.getJSONObject(i);
                     final int level = Integer.parseInt(item.getString("level_id"));
+                    Log.d("level:", String.valueOf(level));
                     int step = Integer.parseInt(item.getString("number"));
                     if (correctAnswer >= step) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                        builder.setMessage("YOU LEVEL " + correctAnswer)
+                        builder.setMessage("LEVEL : " + level)
                                 .setCancelable(false)
                                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                     @Override
@@ -413,7 +413,7 @@ public class testactivity extends AppCompatActivity {
                     }
                     if (i == (alllevel.length() - 1)) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                        builder.setMessage("YOU LEVEL " + 1)
+                        builder.setMessage("LEVEL " + 1)
                                 .setCancelable(false)
                                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                     @Override

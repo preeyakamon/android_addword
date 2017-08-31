@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bgplay"
     tools:context="com.example.acer.addword.DisplaySummary">
 
 
@@ -20,10 +21,10 @@
         android:id="@+id/imageView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/star_big_on"
         android:layout_alignTop="@+id/imageView4"
+        android:layout_marginEnd="24dp"
         android:layout_toStartOf="@+id/imageView4"
-        android:layout_marginEnd="24dp" />
+        app:srcCompat="@android:drawable/star_big_on" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -47,6 +48,7 @@
 
     </LinearLayout>
 
+
     <TextView
         android:id="@+id/tvUsername"
         android:layout_width="wrap_content"
@@ -54,32 +56,59 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="32dp"
-        android:textSize="50dp"
-        android:text="USERNAME" />
+        android:textColor="#000000"
+        android:text="USERNAME"
+        android:textSize="50dp" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/star_big_on"
-        android:layout_marginStart="26dp"
         android:layout_alignTop="@+id/imageView4"
-        android:layout_toEndOf="@+id/imageView4" />
+        android:layout_marginStart="26dp"
+        android:layout_toEndOf="@+id/imageView4"
+        app:srcCompat="@android:drawable/star_big_on" />
 
     <TextView
         android:id="@+id/tvScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="999"
-        android:textSize="70dp"/>
+        android:layout_alignBaseline="@+id/textView2"
+        android:layout_alignBottom="@+id/textView2"
+        android:layout_toEndOf="@+id/imageView"
+        android:textColor="#000000"
+        android:text="Text"
+        android:textSize="25dp" />
 
     <TextView
         android:id="@+id/tvTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/tvScore"
         android:layout_below="@+id/tvScore"
-        android:layout_centerHorizontal="true"
-        android:text="99 วินาที" />
+        android:textColor="#000000"
+        android:text="Text"
+        android:textSize="25dp" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvScore"
+        android:layout_toStartOf="@+id/imageView4"
+        android:text="เวลาที่ทำได้"
+        android:textColor="#000000"
+        android:textSize="25dp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView"
+        android:layout_centerVertical="true"
+        android:text="คะแนนที่ทำได้"
+        android:textColor="#000000"
+        android:textSize="25dp" />
+
+
 </RelativeLayout>

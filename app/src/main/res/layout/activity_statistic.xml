@@ -4,16 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login1"
+    android:background="@drawable/bgplay"
     tools:context="com.example.acer.addword.statisticActivity">
 
+
+    <ImageView
+        android:id="@+id/imgsea"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        app:srcCompat="@drawable/search" />
 
     <EditText
         android:id="@+id/etsearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="13"
+        android:ems="15"
         android:hint="ชื่อ, วัน/เดือน/ปี"
+        android:textColor="#000000"
         android:inputType="textPersonName" />
 
     <android.support.v7.widget.RecyclerView
@@ -22,14 +31,6 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/etsearch"
         android:scrollbars="vertical" />
-
-    <Button
-        android:id="@+id/btnsearch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:text="Search" />
 
 
 </RelativeLayout>

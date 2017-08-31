@@ -9,8 +9,8 @@ import android.widget.ImageView;
 
 public class MenuActivity extends AppCompatActivity {
 
-    ImageView imgstart, imgsta, imgsetting;
-    Button btnlogout;
+    ImageView imgstart, imgsta, imgsetting, imglogout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +20,7 @@ public class MenuActivity extends AppCompatActivity {
         imgstart = (ImageView)findViewById(R.id.imgstart);
         imgsta = (ImageView)findViewById(R.id.imgsta);
         imgsetting = (ImageView)findViewById(R.id.imgsetting);
-        btnlogout = (Button) findViewById(R.id.btnlogout);
+        imglogout = (ImageView) findViewById(R.id.imglogout) ;
 
         imgsta.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,7 +46,7 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
-        btnlogout.setOnClickListener(new View.OnClickListener() {
+        imglogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new PreferenceUtil(MenuActivity.this).removeAllSession();

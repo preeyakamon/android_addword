@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,7 +26,7 @@ import okhttp3.Response;
 public class statisticActivity extends AppCompatActivity {
 
     EditText etsearch;
-    Button btnsearch;
+    ImageView imgsea;
     String url;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -37,7 +38,7 @@ public class statisticActivity extends AppCompatActivity {
         setContentView(R.layout.activity_statistic);
 
         etsearch = (EditText) findViewById(R.id.etsearch);
-        btnsearch = (Button) findViewById(R.id.btnsearch);
+        imgsea = (ImageView) findViewById(R.id.imgsea);
         url = getString(R.string.ip_address) + "/addword/action/seachstatistic.php";
 
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
@@ -47,7 +48,7 @@ public class statisticActivity extends AppCompatActivity {
 
         showAll();
 
-        btnsearch.setOnClickListener(new View.OnClickListener() {
+        imgsea.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String keyword = etsearch.getText().toString();

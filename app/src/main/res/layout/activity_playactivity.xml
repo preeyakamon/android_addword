@@ -4,8 +4,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login1"
+    android:background="@drawable/bgplay"
     tools:context="com.example.acer.addword.Playactivity">
+
+    <ImageView
+        android:id="@+id/imageView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/imageView9"
+        app:srcCompat="@drawable/hplay1" />
+
+    <ImageView
+        android:id="@+id/imageView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/hplay" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+
+        app:srcCompat="@drawable/hplay" />
+
+    <TextView
+        android:id="@+id/tvname_p"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="TextView"
+        android:textColor="#FFFFFF"
+        android:textSize="30dp" />
 
     <TextView
         android:id="@+id/tv_pTime"
@@ -14,7 +45,8 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:text="TextView"
-        android:textSize="25dp" />
+        android:textColor="#FFFFFF"
+        android:textSize="20dp" />
 
     <LinearLayout
         android:id="@+id/layoutShuffle"
@@ -22,8 +54,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/tvTime"
-        android:layout_marginTop="60dp"
-        android:background="#FFFAFA"
+        android:layout_marginTop="100dp"
+        android:background="#E6E6FA"
         android:gravity="center"
         android:orientation="horizontal"></LinearLayout>
 
@@ -32,8 +64,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/layoutShuffle"
+        android:layout_marginTop="0dp"
+        android:background="#E6E6FA"
         android:gravity="center"
-        android:background="#FFFAFA"
         android:textSize="24dp" />
 
     <TextView
@@ -47,22 +80,13 @@
         android:visibility="gone" />
 
     <TextView
-        android:id="@+id/tvname_p"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:text="TextView"
-        android:textSize="30dp" />
-
-    <TextView
         android:id="@+id/tvscoce_p"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/tvname_p"
         android:text="TextView"
-        android:textSize="15dp" />
+        android:textColor="#FFFFFF"
+        android:textSize="20dp" />
 
     <Button
         android:id="@+id/btnskip"
@@ -78,7 +102,8 @@
         android:id="@+id/btnclear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/tvname_p"
-        android:layout_alignTop="@+id/btnskip"
+        android:layout_alignBaseline="@+id/btnskip"
+        android:layout_alignBottom="@+id/btnskip"
+        android:layout_toStartOf="@+id/tvname_p"
         android:text="Clear" />
 </RelativeLayout>
