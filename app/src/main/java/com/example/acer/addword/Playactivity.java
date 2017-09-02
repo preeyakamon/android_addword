@@ -5,6 +5,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +19,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,10 +58,28 @@ public class Playactivity extends AppCompatActivity {
     String currentVocab = "";
     TextView tvscoce_p, tvTranslate;
     JSONArray allLevel;
-    Handler handler;
+    //Handler handler;
     int[] second;
     AlertDialog builder;
     SoundUtil sound;
+    private ProgressBar progressBar;
+    private int time = 0;
+    int currentTime = 0;
+
+    Handler handler = new Handler();
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            if (currentTime < time) {
+                currentTime += 1;
+                startCountDown();
+                handler.postDelayed(runnable, 1000);
+            } else {
+                checkLevel(true);
+                handler.removeCallbacks(runnable);
+            }
+        }
+    };
 
 
     @Override
@@ -70,6 +91,10 @@ public class Playactivity extends AppCompatActivity {
         tvTranslate = (TextView) findViewById(R.id.tvTranslate);
         btnclear = (Button) findViewById(R.id.btnclear);
         btnskip = (Button) findViewById(R.id.btnskip);
+
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        progressBar.setProgressTintList(ColorStateList.valueOf(Color.GREEN));
+
 
         sound = new SoundUtil(this);
 
@@ -144,6 +169,7 @@ public class Playactivity extends AppCompatActivity {
                     JSONObject json = new JSONObject(formServer);
                     if (json.getBoolean("result")) { // if result = true
                         String second = json.getString("second");
+                        time = Integer.parseInt(second);
                         updateTime(second);
 
                         final String name = json.getString("name");
@@ -178,16 +204,31 @@ public class Playactivity extends AppCompatActivity {
         });
 
     }
+    public void startCountDown() {
+        float percentage = (float) ((currentTime * 100) / time);
+        final float progress = (float) (100.0 - percentage);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                TextView tvTime = (TextView) findViewById(R.id.tv_pTime);
+                tvTime.setText(String.valueOf(time - currentTime));
+                if (progress <= 30) {
+                    progressBar.setProgressTintList(ColorStateList.valueOf(Color.RED));
+                    new PreferenceUtil(Playactivity.this).saveTotalTime();
+                }
+                progressBar.setProgress((int) progress);
+            }
+        });
+    }
 
     public void updateTime(final String time) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                second = new int[]{Integer.parseInt(time)};
-                TextView tvTime = (TextView) findViewById(R.id.tv_pTime);
-                tvTime.setText(String.valueOf(second[0]));
-                new PreferenceUtil(Playactivity.this).saveTotalTime();
-                handler = new Handler();
+                ///second = new int[]{Integer.parseInt(time)};
+                //TextView tvTime = (TextView) findViewById(R.id.tv_pTime);
+               // tvTime.setText(String.valueOf(second[0]));
+               // handler = new Handler();
                 handler.postDelayed(runTime, 1000);
             }
         });
@@ -197,9 +238,10 @@ public class Playactivity extends AppCompatActivity {
     Runnable runTime = new Runnable() {
         @Override
         public void run() {
-            second[0] -= 1;
-            if (second[0] >= 0) {
-                updateTime(String.valueOf(second[0]));
+            if (currentTime < time) {
+                currentTime += 1;
+                startCountDown();
+                handler.postDelayed(runTime, 1000);
             } else {
                 checkLevel(true);
                 AlertDialog.Builder builder = new AlertDialog.Builder(Playactivity.this);

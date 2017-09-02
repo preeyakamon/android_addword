@@ -23,7 +23,7 @@ import okhttp3.Response;
 
 public class registerActivity extends AppCompatActivity {
 
-    EditText etname, etusername, etpassword,etconfirm;
+    EditText etname, etusername, etpassword, etconfirm, etemail;
     Button btnregister;
 
     @Override
@@ -36,7 +36,9 @@ public class registerActivity extends AppCompatActivity {
         etconfirm = (EditText)findViewById(R.id.etconfirm);
         etusername = (EditText)findViewById(R.id.etusername);
         etpassword = (EditText)findViewById(R.id.etpassword);
+        etemail =(EditText) findViewById(R.id.etemail);
         btnregister = (Button)findViewById(R.id.btnregister);
+
 
         btnregister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,6 +47,8 @@ public class registerActivity extends AppCompatActivity {
                 String username = etusername.getText().toString();
                 String password = etpassword.getText().toString();
                 String confirm = etconfirm.getText().toString();
+                String email = etemail.getText().toString();
+
                 String url = getString(R.string.ip_address) + "/addword/action/registeruser.php";
 
                 if (password.equals(confirm)) {
@@ -54,12 +58,12 @@ public class registerActivity extends AppCompatActivity {
                     return;
                 }
 
-
                 OkHttpClient client = new OkHttpClient();
                 RequestBody body = new FormBody.Builder()
                         .add("name", name)
                         .add("username", username)
                         .add("password", password)
+                        .add("email", email)
                         .build();
                 Request request = new Request.Builder()
                         .url(url)

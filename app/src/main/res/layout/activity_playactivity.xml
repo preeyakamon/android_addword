@@ -25,7 +25,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-
         app:srcCompat="@drawable/hplay" />
 
     <TextView
@@ -106,4 +105,12 @@
         android:layout_alignBottom="@+id/btnskip"
         android:layout_toStartOf="@+id/tvname_p"
         android:text="Clear" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="380dp"
+        android:layout_height="20dp"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/imageView5" />
 </RelativeLayout>

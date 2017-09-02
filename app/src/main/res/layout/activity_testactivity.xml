@@ -37,7 +37,8 @@
         android:layout_alignParentTop="true"
         android:text="TextView"
         android:textColor="#FFFFFF"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        />
 
     <LinearLayout
         android:id="@+id/layoutShuffle"
@@ -105,5 +106,13 @@
         android:layout_alignBaseline="@+id/btnskip"
         android:layout_alignBottom="@+id/btnskip"
         android:layout_toStartOf="@+id/tvname" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="380dp"
+        android:layout_height="25dp"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/imageView11" />
 
 </RelativeLayout>

@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,10 +57,29 @@ public class testactivity extends AppCompatActivity {
     String currentVocab = "";
     TextView tvscoce, tvTranslate;
     JSONArray alllevel;
-    Handler handler;
+   // Handler handler;
     int[] second;
     AlertDialog builder;
     SoundUtil sound;
+    private ProgressBar progressBar;
+    private int time = 0;
+    int currentTime = 0;
+
+    Handler handler = new Handler();
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            if (currentTime < time) {
+                currentTime += 1;
+                startCountDown();
+                handler.postDelayed(runnable, 1000);
+            } else {
+                checkLevel(true);
+                handler.removeCallbacks(runnable);
+            }
+        }
+    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +90,9 @@ public class testactivity extends AppCompatActivity {
         tvTranslate = (TextView) findViewById(R.id.tvTranslate);
         btnclear = (Button) findViewById(R.id.btnclear);
         btnskip = (Button) findViewById(R.id.btnskip);
+
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        progressBar.setProgressTintList(ColorStateList.valueOf(Color.GREEN));
 
 
         sound = new SoundUtil(this);
@@ -139,6 +164,8 @@ public class testactivity extends AppCompatActivity {
                     JSONObject json = new JSONObject(formServer);
                     if (json.getBoolean("result")) { // if result = true
                         String second = json.getString("second");
+                        time = Integer.parseInt(second);
+                       // time = new int[]{Integer.parseInt(second)};
                         updateTime(second);
 
 
@@ -171,31 +198,50 @@ public class testactivity extends AppCompatActivity {
 
     }
 
+    public void startCountDown() {
+        float percentage = (float) ((currentTime * 100) / time);
+        final float progress = (float) (100.0 - percentage);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                TextView tvTime = (TextView) findViewById(R.id.tvTime);
+                tvTime.setText(String.valueOf(time - currentTime));
+                if (progress <= 30) {
+                    progressBar.setProgressTintList(ColorStateList.valueOf(Color.RED));
+                }
+                progressBar.setProgress((int) progress);
+            }
+        });
+    }
     public void updateTime(final String time) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                second = new int[]{Integer.parseInt(time)};
-                TextView tvTime = (TextView) findViewById(R.id.tvTime);
-                tvTime.setText(String.valueOf(second[0]));
-                handler = new Handler();
-                handler.postDelayed(runTime, 1000);
+                //second = new int[]{Integer.parseInt(time)};
+                // TextView tvTime = (TextView) findViewById(R.id.tvTime);
+                // tvTime.setText(String.valueOf(second[0]));
+                // handler = new Handler();
+                // handler.postDelayed(runTime, 1000);
+                handler.postDelayed(runnable, 1000);
             }
         });
 
     }
 
-    Runnable runTime = new Runnable() {
-        @Override
-        public void run() {
-            second[0] -= 1;
-            if (second[0] >= 0) {
-                updateTime(String.valueOf(second[0]));
-            } else {
-                checkLevel(true);
-            }
-        }
-    };
+
+
+
+    //*Runnable runTime = new Runnable() {
+       // @Override
+        //public void run() {
+        //    second[0] -= 1;
+          //  if (second[0] >= 0) {
+         //       updateTime(String.valueOf(second[0]));
+          //  } else {
+           //     checkLevel(true);
+           // }
+       // }
+   // };
 
     public void displayVocabulary(JSONArray vocab, int position) throws JSONException {
         final LinearLayout layoutShuffle = (LinearLayout) findViewById(R.id.layoutShuffle);
@@ -405,7 +451,7 @@ public class testactivity extends AppCompatActivity {
                                         in.putExtra("level", level);
                                         startActivity(in);
                                         new PreferenceUtil(testactivity.this).addBonusPoint(level);
-                                        handler.removeCallbacks(runTime);
+                                        handler.removeCallbacks(runnable);
                                         finish();
                                     }
                                 }).show();
@@ -423,7 +469,7 @@ public class testactivity extends AppCompatActivity {
                                         in.putExtra("level", 1);
                                         startActivity(in);
                                         new PreferenceUtil(testactivity.this).addBonusPoint(1);
-                                        handler.removeCallbacks(runTime);
+                                        handler.removeCallbacks(runnable);
                                         finish();
                                     }
                                 }).show();
@@ -445,7 +491,7 @@ public class testactivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        handler.removeCallbacks(runTime);
+        handler.removeCallbacks(runnable);
     }
 }
 
